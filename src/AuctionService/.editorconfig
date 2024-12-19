@@ -1,0 +1,20 @@
+[*.{cs,vb}]
+dotnet_naming_rule.private_members_with_underscore.symbols  = private_fields
+dotnet_naming_rule.private_members_with_underscore.style    = prefix_underscore
+dotnet_naming_rule.private_members_with_underscore.severity = suggestion
+
+dotnet_naming_symbols.private_fields.applicable_kinds           = field
+dotnet_naming_symbols.private_fields.applicable_accessibilities = private
+
+dotnet_naming_style.prefix_underscore.capitalization = camel_case
+dotnet_naming_style.prefix_underscore.required_prefix = _
+
+https://www.youtube.com/watch?v=NmL7Y0-YOuo
+
+https://www.youtube.com/watch?v=GmuSz6wGW2E - react Map()
+https://www.youtube.com/watch?v=00lxm_doFYw - react Data Fetching
+https://www.youtube.com/watch?v=6b8fg2XVkJE&list=PLXIf5ibIbJuwCUVWUmotnFfmmVXeasMR_ - React webapi consumption most watch!!!
+https://www.youtube.com/watch?v=tRZGeaHPoaw - for github
+
+https://github.com/Kenny8576
+https://www.youtube.com/watch?v=6tceUYNb1zo - bluz music
