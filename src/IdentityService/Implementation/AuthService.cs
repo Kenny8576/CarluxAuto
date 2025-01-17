@@ -141,7 +141,6 @@ public class AuthService : IAuthService
                 return ResponseDto<UserDto>.Failure(errors, 400);
             }
 
-
             var userToAdd = new User()
             {
                 UserName = registrationRequestDto.Email,
@@ -151,15 +150,12 @@ public class AuthService : IAuthService
                 LastName = registrationRequestDto.Lastname,
             };
 
-
             var result = await _userManager.CreateAsync(userToAdd, registrationRequestDto.Password);
-
 
             if (!result.Succeeded)
                 return ResponseDto<UserDto>.Failure(result.Errors.Select(e => new Error(e.Code, e.Description)), 500);
 
             var userToReturn = _userManager.Users.First(u => u.UserName == registrationRequestDto.Email);
-
 
             if (userToReturn != null)
             {
@@ -173,6 +169,8 @@ public class AuthService : IAuthService
                    <p>
                     Please confirm your email address by clicking the link below:
                   <a href='{confirmationLink}'>Confirm Email</a>
+                            <p>Carluxmart team</p>
+                             <p>twinners</p>
                       </p>
                         ";
 
@@ -194,6 +192,7 @@ public class AuthService : IAuthService
             };
 
             return ResponseDto<UserDto>.Success(UserDTO, "Successfully Registered New User", 201);
+
     }
 
     public async Task<ResponseDto<UserDto>> ResetPassword(ResetPasswordDto ResetPasswordDto)

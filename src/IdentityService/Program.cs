@@ -19,6 +19,7 @@ builder.Services.AddDbContext<AccounntDbContext>(config => {
 
 builder.Services.AddIdentity<User, IdentityRole>()
     .AddEntityFrameworkStores<AccounntDbContext>()
+    .AddRoles<IdentityRole>()
     .AddDefaultTokenProviders();
 
 builder.Services.AddSwaggerGen();
@@ -36,6 +37,27 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+var scope = app.Services.CreateScope();
+
+var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+var roles = new [] {"Admin", "User"};
+
+foreach(var role in roles)
+{
+    if(! await roleManager.RoleExistsAsync(role))
+    {
+        await roleManager.CreateAsync(new IdentityRole(role));
+    }
+}
+
+var roleExists = await roleManager.RoleExistsAsync("USER");
+if (!roleExists)
+{
+    throw new InvalidOperationException("Role USER does not exist.");
+}
+
 
 app.Run();
 
