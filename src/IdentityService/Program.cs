@@ -1,9 +1,14 @@
+using System.Text;
 using IdentityService.Abstractions;
 using IdentityService.Data;
 using IdentityService.Implementation;
 using IdentityService.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.CodeAnalysis.Options;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,6 +35,7 @@ builder.Services.AddScoped<ITokenService, TokenService>();
 var app = builder.Build();
 
 //Configure the HTTP request pipeline.
+
 app.MapControllers();
 builder.Services.AddLogging();
 if (app.Environment.IsDevelopment())
@@ -38,25 +44,25 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-var scope = app.Services.CreateScope();
+// var scope = app.Services.CreateScope();
 
-var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+// var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-var roles = new [] {"Admin", "User"};
+// var roles = new [] {"Admin", "User"};
 
-foreach(var role in roles)
-{
-    if(! await roleManager.RoleExistsAsync(role))
-    {
-        await roleManager.CreateAsync(new IdentityRole(role));
-    }
-}
+// foreach(var role in roles)
+// {
+//     if(! await roleManager.RoleExistsAsync(role))
+//     {
+//         await roleManager.CreateAsync(new IdentityRole(role));
+//     }
+// }
 
-var roleExists = await roleManager.RoleExistsAsync("USER");
-if (!roleExists)
-{
-    throw new InvalidOperationException("Role USER does not exist.");
-}
+// var roleExists = await roleManager.RoleExistsAsync("USER");
+// if (!roleExists)
+// {
+//     throw new InvalidOperationException("Role USER does not exist.");
+// }
 
 
 app.Run();

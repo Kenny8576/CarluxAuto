@@ -18,6 +18,7 @@ namespace SearchService.Controller
             
             if(!string.IsNullOrEmpty(searchParams.SearchTerm))
             {
+
                 query.Match(Search.Full, searchParams.SearchTerm).SortByTextScore();
             }
 

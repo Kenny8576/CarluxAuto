@@ -27,7 +27,8 @@ public class AuctionUpdatedConsumer : IConsumer<AuctionUpdated>
                                 x.Color,
                                 x.Make,
                                 x.Model,
-                                x.Mileage
+                                x.Mileage,
+                                x.Year
                             }, item).ExecuteAsync();
 
         if (!result.IsAcknowledged) throw new MessageException(typeof(AuctionUpdated), "Problem updating mongodb");
