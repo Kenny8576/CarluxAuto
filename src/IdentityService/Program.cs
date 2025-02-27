@@ -32,9 +32,45 @@ builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:3000")
+                  .AllowAnyHeader()
+                  .AllowAnyMethod()
+                  .AllowCredentials();
+        });
+});
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.RequireHttpsMetadata = false;
+        options.SaveToken = true;
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"])),
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            ClockSkew = TimeSpan.Zero
+        };
+    });
+
+builder.Services.AddAuthorization();
+
+
 var app = builder.Build();
 
 //Configure the HTTP request pipeline.
+
+app.UseCors("AllowFrontend");
+
+app.UseAuthentication();
+app.UseAuthorization();
+
 
 app.MapControllers();
 builder.Services.AddLogging();
@@ -44,24 +80,19 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-// var scope = app.Services.CreateScope();
-
-// var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-
-// var roles = new [] {"Admin", "User"};
-
-// foreach(var role in roles)
+// using (var scope = app.Services.CreateScope())
 // {
-//     if(! await roleManager.RoleExistsAsync(role))
+//     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+//     var roles = new[] { "Admin", "User" };
+
+//     foreach (var role in roles)
 //     {
-//         await roleManager.CreateAsync(new IdentityRole(role));
+//         if (!await roleManager.RoleExistsAsync(role))
+//         {
+//             await roleManager.CreateAsync(new IdentityRole(role));
+//         }
 //     }
-// }
-
-// var roleExists = await roleManager.RoleExistsAsync("USER");
-// if (!roleExists)
-// {
-//     throw new InvalidOperationException("Role USER does not exist.");
 // }
 
 

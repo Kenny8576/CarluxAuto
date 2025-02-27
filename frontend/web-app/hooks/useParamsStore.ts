@@ -1,7 +1,5 @@
 import { createWithEqualityFn } from "zustand/traditional"
 
-
-
 type State = {
     pageNumber: number
     pageSize: number

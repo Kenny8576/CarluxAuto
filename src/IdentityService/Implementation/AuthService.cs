@@ -178,7 +178,7 @@ public class AuthService : IAuthService
 
             }
 
-             await _userManager.AddToRoleAsync(userToAdd, "user");
+            //  await _userManager.AddToRoleAsync(userToAdd, "user");
             //await AssignRole(userToReturn.Email, "USER");
             //var roles = await _userManager.GetRolesAsync(userToReturn);
 

@@ -22,4 +22,24 @@ export type Auction = {
     imageUrl: string
     id: string
   }
+
+  export type Identity = {
+    firstname: string
+    lastname: string
+    email: string
+    password: string
+    social?: string
+  }
+
+export type LoginDetails = {
+  email: string
+  password: string
+}
+
+export type ResetObject = {
+  email: string
+  newPassword: string
+  confirmPassword: string
+  token: string
+}
   

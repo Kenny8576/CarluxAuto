@@ -10,9 +10,16 @@ import { useParamsStore } from '@/hooks/useParamsStore';
 import qs from 'query-string';
 import { shallow } from 'zustand/shallow';
 import EmptyFilter from '../components/EmptyFilter';
+// import { auth } from '@/lib/auth';
+// import { redirect } from 'next/navigation';
 
 
 export default function Listings() {
+
+  // const session = await auth();
+  // if(!session) redirect('/login');
+
+
   const [data, setData] = useState<PagedResult<Auction>>();
 
   const params = useParamsStore(state => ({
@@ -25,7 +32,6 @@ export default function Listings() {
 
   const setParams = useParamsStore(state => state.setParams);
   const url = qs.stringifyUrl({ url: '', query: params});
-
 
   function setPageNumber(pageNumber: number) {
     setParams({pageNumber})
