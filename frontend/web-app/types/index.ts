@@ -42,4 +42,12 @@ export type ResetObject = {
   confirmPassword: string
   token: string
 }
+
+export type Bid = {
+  id: string
+  auctionId: string
+  bidder: string
+  amount: string
+  bidStatus: string
+}
   

@@ -2,7 +2,7 @@ import axios from "axios";
 
 // Define Axios Instance
 export const Api = axios.create({
-  baseURL: "http://localhost:5000/api/Account/",
+  baseURL: "http://localhost:5001/api/Account/",
 });
 
 // Define Fetcher Function

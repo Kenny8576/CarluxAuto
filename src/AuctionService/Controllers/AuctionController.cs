@@ -53,7 +53,7 @@ public class AuctionController : ControllerBase
         return _mapper.Map<AuctionDto>(auction);
     }
 
-    
+    [Authorize]
     [HttpPost]
     public async Task<ActionResult<AuctionDto>> CreatedAuction(CreateAuctionDto auctionDto)
     {
@@ -75,7 +75,7 @@ public class AuctionController : ControllerBase
                 new {auction.Id}, newAuction);
     }
 
-    
+    [Authorize]
     [HttpPut("{id}")]
     public async Task<ActionResult> UpdateAuction(UpdateAuctionDto updateAuctionDto, Guid id)
     {
