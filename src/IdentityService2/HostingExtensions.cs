@@ -1,4 +1,5 @@
 using Duende.IdentityServer;
+using Duende.IdentityServer.Configuration;
 using IdentityService2.Data;
 using IdentityService2.Models;
 using IdentityService2.Services;
@@ -33,6 +34,12 @@ internal static class HostingExtensions
                 options.Events.RaiseFailureEvents = true;
                 options.Events.RaiseSuccessEvents = true;
 
+               
+                if (builder.Environment.IsEnvironment("Docker"))
+                {
+                    options.IssuerUri = "identity2-svc";
+                }
+
                 // see https://docs.duendesoftware.com/identityserver/v6/fundamentals/resources/
                 //options.EmitStaticAudienceClaim = true;
             })
@@ -46,7 +53,10 @@ internal static class HostingExtensions
                 option.Cookie.SameSite = SameSiteMode.Lax;
             });
         
-        // builder.Services.AddAuthentication()
+
+        builder.Services.AddAuthentication();
+
+        
         //     .AddGoogle(options =>
         //     {
         //         options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
